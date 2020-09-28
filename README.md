@@ -2,7 +2,7 @@
  A simple tool that will display an overlay text if you are Visible/NotVisible by the enemy side.
 
 Note:
-This program is meant to be an experimental purposes and may also be considered as a 3rd party program, im not responsible for any actions you make.
+This program is meant to be an experimental purposes is considered as a 3rd party program, im not responsible for any actions you make.
 
 The purpose if this program is to notify the user if his current position is visible to the enemy team.
 There are 2 programs that does the job individualy, One checks the memory for updated information and the other display the current information through overlay.
@@ -18,6 +18,7 @@ Usage :
 Run Program ingame
 Press END to exit
 
+TODO :
 - [x] Show overlay only when Dota 2 is highligted as window
 - [x] Pattern Scan
 - [ ] Resize and move
