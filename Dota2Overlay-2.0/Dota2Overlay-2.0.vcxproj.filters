@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="d3d9.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="patterscan.cpp">
+      <Filter>Hack\Mem</Filter>
+    </ClCompile>
+    <ClCompile Include="proc.cpp">
+      <Filter>Hack\Mem</Filter>
+    </ClCompile>
+    <ClCompile Include="Dota2MemReader.cpp">
+      <Filter>Hack</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hD3D9.h">
+      <Filter>Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="hDraw.h">
+      <Filter>Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="patternscan.h">
+      <Filter>Hack\Mem</Filter>
+    </ClInclude>
+    <ClInclude Include="proc.h">
+      <Filter>Hack\Mem</Filter>
+    </ClInclude>
+    <ClInclude Include="Dota2MemReader.h">
+      <Filter>Hack</Filter>
+    </ClInclude>
+    <ClInclude Include="hMain.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{9256c7f9-d11d-4ab2-9058-db020ecab2f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{afeca1c9-3ece-4f8d-8f3b-0adb631d0415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack">
+      <UniqueIdentifier>{57438496-fa6c-4a39-bf41-5fffeff6077c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Draw">
+      <UniqueIdentifier>{e9d1b06e-09f8-4924-9571-26a833b595ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\Mem">
+      <UniqueIdentifier>{00c04a6a-18de-489b-b9c7-c0c8dc3200fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

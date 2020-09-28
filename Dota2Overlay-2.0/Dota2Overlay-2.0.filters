@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="d3d9">
+      <UniqueIdentifier>{fd936dd5-6cda-4542-9914-3d8d6b17ba8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack">
+      <UniqueIdentifier>{133a5aab-ef1c-4a67-bf3a-2880c76463c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hack\Mem">
+      <UniqueIdentifier>{40cd1afe-e0ff-410b-a2f4-ae587127bef1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="d3d9.cpp">
+      <Filter>d3d9</Filter>
+    </ClCompile>
+    <ClCompile Include="Dota2MemReader.cpp">
+      <Filter>Hack</Filter>
+    </ClCompile>
+    <ClCompile Include="patterscan.cpp">
+      <Filter>Hack\Mem</Filter>
+    </ClCompile>
+    <ClCompile Include="proc.cpp">
+      <Filter>Hack\Mem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hD3D9.h">
+      <Filter>d3d9</Filter>
+    </ClInclude>
+    <ClInclude Include="patternscan.h">
+      <Filter>Hack\Mem</Filter>
+    </ClInclude>
+    <ClInclude Include="proc.h">
+      <Filter>Hack\Mem</Filter>
+    </ClInclude>
+    <ClInclude Include="Dota2MemReader.h">
+      <Filter>Hack</Filter>
+    </ClInclude>
+    <ClInclude Include="include.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
