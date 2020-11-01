@@ -116,15 +116,15 @@ int Render()
 		int vbe = getVbe();
 		if (vbe == 14)
 		{
-			DrawString((char*)"Visible", getPercent(45, windowWidth), getPercent(3, windowHeight), 255, 0, 0, dx_Font);
+			DrawString((char*)"Visible", getPercent(overlaySize, windowWidth), getPercent(4, windowHeight), 255, 0, 0, dx_Font);
 		}
 		else if (vbe >= 6 && vbe <= 10)
 		{
-			DrawString((char*)"Not Visible", getPercent(42, windowWidth), getPercent(3, windowHeight), 0, 255, 0, dx_Font);
+			DrawString((char*)"Not Visible", getPercent(overlaySize, windowWidth), getPercent(4, windowHeight), 0, 255, 0, dx_Font);
 		}
 		else
 		{
-			DrawString((char*)"Waiting", getPercent(45, windowWidth), getPercent(3, windowHeight), 255, 0, 0, dx_Font);
+			DrawString((char*)"Waiting", getPercent(overlaySize, windowWidth), getPercent(4, windowHeight), 255, 0, 0, dx_Font);
 		}
 		 // Put Main procedure here like ESP etc.
 	}

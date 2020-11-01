@@ -4,7 +4,7 @@
 HWND hWnd, TargetWnd;
 MSG Message;
 RECT WindowRect, ClientRect;
-int windowWidth, windowHeight;
+int windowWidth, windowHeight, overlaySize;
 int clientWidth = 1366, clientHeight = 768;
 int borderWidth, borderHeight; // Grenz Größen
 
@@ -98,9 +98,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	if (TargetWnd)
 	{
+		// Adjust Overlay text size and location based on resolution
+		overlaySize = 45;
 		GetWindowRect(TargetWnd, &WindowRect);
 		windowWidth = WindowRect.right - WindowRect.left;
 		windowHeight = WindowRect.bottom - WindowRect.top;
+		if (windowWidth > 1366)
+		{
+			overlaySize = 48;
+		}
 		hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, lWindowName, lWindowName, WS_POPUP, 1, 1, windowWidth, windowHeight, 0, 0, 0, 0);
 	}
 
