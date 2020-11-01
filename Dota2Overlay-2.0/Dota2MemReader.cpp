@@ -1,7 +1,12 @@
 #include "Dota2MemReader.h"
 
 
-std::vector<unsigned int> offsets = { 0x40, 0x98, 0x170, 0x0, 0x418, 0x20, 0xE04 };
+std::vector<unsigned int> offsets = { 0x0, 0x28, 0x38, 0x70, 0x170, 0x0, 0x1E4 };
+const char* basePtr1 = "\xE0\x0A\x32\xBE\xA6\x02\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\x30\x37\xA7\x02\x00\x00";
+const char* mask1 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
+const char* basePtr2 = "\xE0\x0A\x32\xBE\xA6\x01\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\x30\x37\xA7\x01\x00\x00";
+const char* mask2 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
+
 uintptr_t vbEAddr;
 void* vbeBaseAddr;
 HANDLE hProcess;
@@ -33,9 +38,14 @@ int initHack()
 int getVbe() {
 
     if (vbeBaseAddr == NULL)
-    {
-        vbeBaseAddr = PatternScanExModule(hProcess, L"dota2.exe", L"engine2.dll", "\x00\x18\x23\x2E\x16\x02\x00\x00\x10\x00\x00\x00\x00\x00\x00\x00\x25\x00\x00\x00\x00\x00\x00\x00\x00\x08\x58\x12\x16\x02\x00\x00", "??????xxxxxxxxxxxxxxxxxxx?????xx");
-        if (vbeBaseAddr == NULL) { OutputDebugString(L"Pattern not found...\n"); return NULL; }
+    {//                                                                 
+        vbeBaseAddr = PatternScanExModule(hProcess, L"dota2.exe", L"engine2.dll", basePtr1, mask1);
+        if (vbeBaseAddr == NULL)
+        {
+            OutputDebugString(L"Retrying AOB with offset 2...\n");
+            vbeBaseAddr = PatternScanExModule(hProcess, L"dota2.exe", L"engine2.dll", basePtr2, mask2);
+        }
+        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; }
         _RPT1(0, "Vbe BaseAddress = %p\n", vbeBaseAddr);
     }
 
@@ -76,6 +86,7 @@ void close()
     vbEAddr = NULL;
     CloseHandle(hProcess);
 }
+
 
 
 //Not Visible = 06(radiant team) , 10(dire team) ; Visible = 14 
