@@ -4,8 +4,8 @@
 HWND hWnd, TargetWnd;
 MSG Message;
 RECT WindowRect, ClientRect;
-int windowWidth, windowHeight, overlaySize;
-int clientWidth , clientHeight;
+int windowWidth, windowHeight, overlayScale, overlayX_Pos, overlayY_Pos;
+int clientWidth = 1920, clientHeight = 1080;
 int borderWidth, borderHeight; // Grenz Größen
 
 char lWindowName[256] = "GG";
@@ -33,6 +33,12 @@ LRESULT CALLBACK Proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 }
+
+int getPercent(float percent, float value)
+{
+	return (percent / 100) * value;
+}
+
 
 void gen_random(char* s, const int len) {
 	static const char alphanum[] =
@@ -99,15 +105,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (TargetWnd)
 	{
 		// Adjust Overlay text size and location based on resolution
-		overlaySize = 45;
+		overlayScale = 45;
 		GetWindowRect(TargetWnd, &WindowRect);
 		windowWidth = WindowRect.right - WindowRect.left;
 		windowHeight = WindowRect.bottom - WindowRect.top;
-		clientHeight = windowHeight;
-		clientWidth = windowWidth;
-
 		_RPT1(0, "WindowWidth = %u\n", windowWidth);
-		overlaySize = 45;
+		_RPT1(0, "WindowHeight = %u\n", windowHeight);
+
+		overlayX_Pos = getPercent(overlayScale, windowWidth);
+		overlayY_Pos = getPercent(4, windowHeight);
+
 		hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, lWindowName, lWindowName, WS_POPUP, 1, 1, windowWidth, windowHeight, 0, 0, 0, 0);
 	}
 

@@ -18,8 +18,9 @@
 
 extern int windowWidth;
 extern int windowHeight; 
-extern int overlaySize;
-extern int overlaySize;
+extern int overlayScale;
+extern int overlayX_Pos;
+extern int overlayY_Pos;
 extern char lWindowName[256]; // Overlay Name
 extern HWND hWnd; // Our programs handle
 extern char tWindowName[256]; // Window name
