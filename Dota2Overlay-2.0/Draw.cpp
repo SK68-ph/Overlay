@@ -46,7 +46,6 @@ void GradientFunc(int x, int y, int w, int h, int r, int g, int b, int a)
 		iColorr = (int)((float)i / h * r);
 		iColorg = (int)((float)i / h * g);
 		iColorb = (int)((float)i / h * b);
-		DrawFilled(x, y + i, w, 1, r - iColorr, g - iColorg, b - iColorb, a);
 	}
 }
 void DrawLine(float x, float y, float xx, float yy, int r, int g, int b, int a)

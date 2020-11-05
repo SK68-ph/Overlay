@@ -3,6 +3,8 @@
 #pragma once
 #include "hMain.h"
 #include "hDraw.h"
+#pragma warning( disable : 4244 )
+#pragma warning( disable : 4996 )
 
 #include "include.h"
 #include <algorithm>

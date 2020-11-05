@@ -146,7 +146,6 @@
   <ItemGroup>
     <ClCompile Include="d3d9.cpp" />
     <ClCompile Include="Dota2MemReader.cpp" />
-    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="patterscan.cpp" />
     <ClCompile Include="proc.cpp" />
@@ -154,7 +153,6 @@
   <ItemGroup>
     <ClInclude Include="Dota2MemReader.h" />
     <ClInclude Include="hD3D9.h" />
-    <ClInclude Include="hDraw.h" />
     <ClInclude Include="hMain.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="patternscan.h" />
