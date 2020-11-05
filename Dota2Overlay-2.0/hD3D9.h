@@ -25,6 +25,10 @@ extern int fontSize;
 
 void setFontSize(INT fontsize);
 
+void getConfig();
+
+void setConfig();
+
 int D3D9Init(HWND hWnd);
 
 int Render();

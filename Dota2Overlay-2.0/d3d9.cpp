@@ -20,11 +20,45 @@ void setFontSize(INT FontSize) {
 	D3DXCreateFont(dx_Device, FontSize, 0, FW_LIGHT, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Arial", &dx_Font);
 }
 
+// Restore previous position and fontsize from Config
+void getConfig() {
+	std::string line;
+	std::ifstream config("conf.txt");
+	if (config.is_open()) {
+		std::getline(config, line);
+		overlayX_Pos = std::stoi(line);
+		std::getline(config, line);
+		overlayY_Pos = std::stoi(line);
+		std::getline(config, line);
+		fontSize = std::stoi(line);
+	}
+	else {
+		OutputDebugString(L"Config doesn't exist");
+	}
+	config.close();
+}
+
+void setConfig() {
+	std::ofstream config("conf.txt");
+	if (config.is_open())
+	{
+		config << overlayX_Pos << std::endl;
+		config << overlayY_Pos << std::endl;
+		config << fontSize << std::endl;
+		config.close();
+	}
+	else {
+		OutputDebugString(L"Error Saving Config");
+	}
+}
 /*
 We require to initialize the D3D drawing, so we require hWnd. Windows identifies each form or application by assigning it a handle or also known as hWnd.
 */
 int D3D9Init(HWND hWnd)
 {
+	//Before we initialize overlay lets check if theres a config.
+	getConfig();
+
 	if (FAILED(Direct3DCreate9Ex(D3D_SDK_VERSION, &dx_Object)))
 	{
 		exit(1);
@@ -47,7 +81,8 @@ int D3D9Init(HWND hWnd)
 
 	if (!dx_Line)
 		D3DXCreateLine(dx_Device, &dx_Line);
-	setFontSize(50);
+
+	setFontSize(fontSize);
 	
 	return 0;
 

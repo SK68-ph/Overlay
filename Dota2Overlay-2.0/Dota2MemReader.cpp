@@ -22,7 +22,7 @@ int initHack()
         //Get Handle to Process
         if (hProcess == 0)
         {
-            OutputDebugString(L"Failed to attach process. Try running with administrative previlages\n");
+            MessageBox(NULL, L"Failed to attach process. Try running with administrative previlages.", L"Error", MB_ICONERROR);
             return -1;
         }
         OutputDebugString(L"Handle successfully created...\n");
@@ -30,7 +30,7 @@ int initHack()
     }
     else
     {
-        OutputDebugString(L"Process not found.\n");
+        MessageBox(NULL, L"Process not found.", L"Error", MB_ICONERROR);
         return -1;
     }
 }

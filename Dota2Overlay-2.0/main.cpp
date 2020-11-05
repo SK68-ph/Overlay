@@ -7,6 +7,7 @@ RECT WindowRect, ClientRect;
 int windowWidth, windowHeight, overlayScale, overlayX_Pos, overlayY_Pos;
 int clientWidth = 1920, clientHeight = 1080;
 int borderWidth, borderHeight; // Grenz Größen
+int savedX_Pos,savedY_Pos,savedFont_Size;
 
 char lWindowName[256] = "GG";
 char tWindowName[256] = "Dota 2"; // put Game window name here
@@ -134,9 +135,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ShowWindow(hWnd, SW_SHOW);
 	if (initHack() == -1)
 	{
-		MessageBox(NULL, L"Error", L"Error", 0);
-		
+		MessageBox(NULL, L"Overlay failed to initialize...", L"Error", 0);
+		exit(1);
 	}
+
+
+
 	/*
 	We use our handle to our overlay and initalize our D3D adapter.
 	*/
@@ -173,7 +177,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		If there is no game, quit.
 		*/
 		if (!TargetWnd)
-			exit(0);
+			exit(1);
 
 		/*
 		Set the RECT using the targeted window.
@@ -214,8 +218,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				{
 					overlayX_Pos = p.x;
 					overlayY_Pos = p.y;
-					_RPT1(0, "Cursor Pos X= %u", p.x);
-					_RPT1(0, "Cursor Pos y= %u", p.y);
 				}
 			}
 			
@@ -235,6 +237,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		MoveWindow(hWnd, WindowRect.left, WindowRect.top, clientWidth, clientHeight, true);
 
 	} // End of Loop
+	setConfig();
 
 	/*
 	Lets exit immediately...
