@@ -186,6 +186,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		/*
 		Resize the overlay matching what is required.
+		This is used for windowed mode so that we can adjust overlay relative to window position.
 		*/
 		DWORD dwStyle = GetWindowLong(TargetWnd, GWL_STYLE);
 
