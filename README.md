@@ -22,5 +22,6 @@ TODO :
 - [x] Show overlay only when Dota 2 is highligted as window
 - [x] Pattern Scan
 - [x] Resize and move
-- [ ] Save current location and size 
-- [ ] Restore from config saved location and size 
+- [x] Save current location and size 
+- [x] Restore from config saved location and size 
+- [] ...
