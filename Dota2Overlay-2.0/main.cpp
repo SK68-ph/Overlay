@@ -109,6 +109,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		GetWindowRect(TargetWnd, &WindowRect);
 		windowWidth = WindowRect.right - WindowRect.left;
 		windowHeight = WindowRect.bottom - WindowRect.top;
+		clientHeight = windowHeight;
+		clientWidth = windowWidth;
+
 		_RPT1(0, "WindowWidth = %u\n", windowWidth);
 		_RPT1(0, "WindowHeight = %u\n", windowHeight);
 
