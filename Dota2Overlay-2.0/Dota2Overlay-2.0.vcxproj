@@ -76,6 +76,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>Dota2Overlay-2.0_x86</TargetName>
+    <IncludePath>D:\Programs\MSDirectX-SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Programs\MSDirectX-SDK\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -86,6 +89,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>D:\Programs\MSDirectX-SDK\Include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Programs\MSDirectX-SDK\Lib\x64;$(LibraryPath)</LibraryPath>
+    <TargetName>Dota2Overlay-2.0_x64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
