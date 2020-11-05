@@ -60,3 +60,5 @@ Dota2Overlay-2.0/Release/Dota2Overlay-2.0.log
 *.iobj
 *.pdb
 *.ipdb
+x64/Debug/conf.txt
+Dota2Overlay-2.0/conf.txt
