@@ -57,3 +57,6 @@ Dota2Overlay-2.0/x64/Release/Dota2Overlay-2.0.vcxproj.FileListAbsolute.txt
 Dota2Overlay-2.0/x64/Release/Dota2Overlay-2.0.Build.CppClean.log
 Dota2Overlay-2.0/Release/Dota2Overlay-2.0.vcxproj.FileListAbsolute.txt
 Dota2Overlay-2.0/Release/Dota2Overlay-2.0.log
+*.iobj
+*.pdb
+*.ipdb
