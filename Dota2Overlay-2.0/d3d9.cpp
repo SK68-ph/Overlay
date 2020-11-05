@@ -8,9 +8,17 @@ IDirect3DDevice9Ex* dx_Device = NULL;
 D3DPRESENT_PARAMETERS dx_Params;
 ID3DXLine* dx_Line;
 ID3DXFont* dx_Font = 0;
+int fontSize = 50;
 
 int DrawString(char* String, int x, int y, int r, int g, int b, ID3DXFont* ifont);
 int DrawShadowString(char* String, int x, int y, int r, int g, int b, ID3DXFont* ifont);
+
+
+// Set our current font size 50 default
+void setFontSize(INT FontSize) {
+	fontSize = FontSize;
+	D3DXCreateFont(dx_Device, FontSize, 0, FW_LIGHT, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Arial", &dx_Font);
+}
 
 /*
 We require to initialize the D3D drawing, so we require hWnd. Windows identifies each form or application by assigning it a handle or also known as hWnd.
@@ -39,8 +47,8 @@ int D3D9Init(HWND hWnd)
 
 	if (!dx_Line)
 		D3DXCreateLine(dx_Device, &dx_Line);
-
-	D3DXCreateFont(dx_Device, 50, 0, FW_LIGHT, 1, false, DEFAULT_CHARSET, OUT_DEVICE_PRECIS, ANTIALIASED_QUALITY, DEFAULT_PITCH, L"Arial", &dx_Font);
+	setFontSize(50);
+	
 	return 0;
 
 }

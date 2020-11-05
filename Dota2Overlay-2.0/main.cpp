@@ -204,9 +204,37 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			WindowRect.top += borderHeight;
 		}
 
+		// if insert is pressed we move our TextOverlay to current cursor position
+		if (GetAsyncKeyState(VK_INSERT) & 1)
+		{
+			POINT p;					
+			if (GetCursorPos(&p))
+			{
+				if (ScreenToClient(hWnd, &p))
+				{
+					overlayX_Pos = p.x;
+					overlayY_Pos = p.y;
+					_RPT1(0, "Cursor Pos X= %u", p.x);
+					_RPT1(0, "Cursor Pos y= %u", p.y);
+				}
+			}
+			
+		}
+		// if PageUp is pressed we increase font size
+		if (GetAsyncKeyState(VK_PRIOR) & 1)
+		{
+			setFontSize(fontSize += 2);
+		}
+		// if PageDown is pressed we deccrease font size
+		else if (GetAsyncKeyState(VK_NEXT) & 1)
+		{
+			setFontSize(fontSize -= 2);
+		}
+
+
 		MoveWindow(hWnd, WindowRect.left, WindowRect.top, clientWidth, clientHeight, true);
 
-	} // End of Panic Loop
+	} // End of Loop
 
 	/*
 	Lets exit immediately...

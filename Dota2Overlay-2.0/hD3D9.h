@@ -21,7 +21,9 @@ extern IDirect3DDevice9Ex* dx_Device;
 extern D3DPRESENT_PARAMETERS dx_Params;
 extern ID3DXLine* dx_Line;
 extern ID3DXFont* dx_Font;
+extern int fontSize;
 
+void setFontSize(INT fontsize);
 
 int D3D9Init(HWND hWnd);
 
