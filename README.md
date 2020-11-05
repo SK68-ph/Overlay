@@ -21,6 +21,6 @@ Press END to exit
 TODO :
 - [x] Show overlay only when Dota 2 is highligted as window
 - [x] Pattern Scan
-- [ ] Resize and move
+- [x] Resize and move
 - [ ] Save current location and size 
 - [ ] Restore from config saved location and size 
