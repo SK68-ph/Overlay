@@ -218,6 +218,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				{
 					overlayX_Pos = p.x;
 					overlayY_Pos = p.y;
+					setConfig();
 				}
 			}
 			
@@ -226,11 +227,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (GetAsyncKeyState(VK_PRIOR) & 1)
 		{
 			setFontSize(fontSize += 2);
+			setConfig();
 		}
 		// if PageDown is pressed we deccrease font size
 		else if (GetAsyncKeyState(VK_NEXT) & 1)
 		{
 			setFontSize(fontSize -= 2);
+			setConfig();
 		}
 
 
