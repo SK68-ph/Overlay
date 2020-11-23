@@ -6,11 +6,11 @@ MSG Message;
 RECT WindowRect, ClientRect;
 int windowWidth, windowHeight, overlayScale, overlayX_Pos, overlayY_Pos;
 int clientWidth = 1920, clientHeight = 1080;
-int borderWidth, borderHeight; // Grenz Größen
+int borderWidth, borderHeight; 
 int savedX_Pos,savedY_Pos,savedFont_Size;
 
 char lWindowName[256] = "GG";
-char tWindowName[256] = "Dota 2"; // put Game window name here
+char tWindowName[256] = "Dota 2";
 
 const MARGINS pMargin = { 0,0, clientWidth, clientHeight };
 

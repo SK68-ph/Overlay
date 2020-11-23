@@ -21,10 +21,10 @@ extern int windowHeight;
 extern int overlayScale;
 extern int overlayX_Pos;
 extern int overlayY_Pos;
-extern char lWindowName[256]; // Overlay Name
-extern HWND hWnd; // Our programs handle
-extern char tWindowName[256]; // Window name
-extern HWND TargetWnd; // Target Exe Name
+extern char lWindowName[256];
+extern HWND hWnd; 
+extern char tWindowName[256];
+extern HWND TargetWnd;
 extern RECT WindowRect, ClientRect;
 extern MSG Message;
 
