@@ -31,6 +31,6 @@ void setConfig();
 
 int D3D9Init(HWND hWnd);
 
-int Render();
+void Render();
 
 #endif

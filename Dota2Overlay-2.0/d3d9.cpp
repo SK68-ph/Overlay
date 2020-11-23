@@ -66,65 +66,51 @@ We require to initialize the D3D drawing, so we require hWnd. Windows identifies
 */
 int D3D9Init(HWND hWnd)
 {
+	if (FAILED(Direct3DCreate9Ex(D3D_SDK_VERSION, &dx_Object)))
+		exit(1);
+
 	getConfig();
 
-	if (FAILED(Direct3DCreate9Ex(D3D_SDK_VERSION, &dx_Object)))
-	{
-		exit(1);
-	}
-	dx_Params.BackBufferFormat = D3DFMT_A8R8G8B8;
 
+	ZeroMemory(&dx_Params, sizeof(dx_Params));
+	dx_Params.Windowed = TRUE;
+	dx_Params.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	dx_Params.hDeviceWindow = hWnd;
+	dx_Params.MultiSampleQuality = D3DMULTISAMPLE_NONE;
+	dx_Params.BackBufferFormat = D3DFMT_A8R8G8B8;
 	dx_Params.BackBufferWidth = windowWidth;
 	dx_Params.BackBufferHeight = windowHeight;
 	dx_Params.EnableAutoDepthStencil = TRUE;
 	dx_Params.AutoDepthStencilFormat = D3DFMT_D16;
-	dx_Params.hDeviceWindow = hWnd;
-	dx_Params.MultiSampleQuality = DEFAULT_QUALITY;
-	dx_Params.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	dx_Params.Windowed = TRUE;
-
-	if (FAILED(dx_Object->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, NULL, D3DCREATE_HARDWARE_VERTEXPROCESSING, &dx_Params, 0, &dx_Device)))
-	{
+	if (FAILED(dx_Object->CreateDeviceEx(D3DADAPTER_DEFAULT,
+		D3DDEVTYPE_HAL,
+		hWnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		&dx_Params,
+		0,
+		&dx_Device)))
 		exit(1);
-	}
-
-	if (!dx_Line)
-		D3DXCreateLine(dx_Device, &dx_Line);
-
 	setFontSize(fontSize);
-	
 	return 0;
 
 }
 
 
-int Render()
+void Render()
 {
-	dx_Device->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.0f, 0);
-	dx_Device->BeginScene();
-
-	if (TargetWnd == GetForegroundWindow())
+	int vbe = getVbe();
+	if (vbe == 14)
 	{
-		int vbe = getVbe();
-		if (vbe == 14)
-		{
-			DrawString((char*)"Visible", overlayX_Pos, overlayY_Pos, 255, 0, 0, dx_Font);
-		}
-		else if (vbe >= 6 && vbe <= 10)
-		{
-			DrawString((char*)"Not Visible", overlayX_Pos, overlayY_Pos, 0, 255, 0, dx_Font);
-		}
-		else
-		{
-			DrawString((char*)"Waiting", overlayX_Pos, overlayY_Pos, 255, 0, 0, dx_Font);
-		}
-		 // Put Main procedure here like ESP etc.
+		DrawString((char*)"Visible", overlayX_Pos, overlayY_Pos, 255, 0, 0, dx_Font);
 	}
-
-	dx_Device->EndScene();
-	dx_Device->PresentEx(0, 0, 0, 0, 0);
-
-	return 0;
+	else if (vbe >= 6 && vbe <= 10)
+	{
+		DrawString((char*)"Not Visible", overlayX_Pos, overlayY_Pos, 0, 255, 0, dx_Font);
+	}
+	else
+	{
+		DrawString((char*)"Waiting", overlayX_Pos, overlayY_Pos, 255, 0, 0, dx_Font);
+	}
 }
 
 int DrawString(char* String, int x, int y, int r, int g, int b, ID3DXFont* ifont)
@@ -152,7 +138,7 @@ int DrawShadowString(char* String, int x, int y, int r, int g, int b, ID3DXFont*
 	Fonts1.top = y;
 	RECT Fonts2;
 	Fonts2.left = x;
-	Fonts2.top = y + 1;
+	Fonts2.top = y + 1;	
 	RECT Fonts3;
 	Fonts3.left = x;
 	Fonts3.top = y - 1;

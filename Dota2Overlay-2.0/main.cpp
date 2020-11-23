@@ -20,17 +20,35 @@ LRESULT CALLBACK Proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 	switch (Message)
 	{
 
-	case WM_PAINT: // we need to paint? lets paint!
-		Render();
+	case WM_PAINT:
+
+
+		if (TargetWnd == GetForegroundWindow())
+		{
+			dx_Device->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.0f, 0);
+			dx_Device->BeginScene();
+			Render();
+			dx_Device->EndScene();
+			dx_Device->PresentEx(0, 0, 0, 0, 0);
+		}
+		else
+		{
+			dx_Device->Clear(0, 0, D3DCLEAR_TARGET, 0, 1.0f, 0);
+			dx_Device->BeginScene();
+
+			dx_Device->EndScene();
+			dx_Device->PresentEx(0, 0, 0, 0, 0);
+		}
+
 		break;
 	case WM_CREATE:
-		return DwmExtendFrameIntoClientArea(hWnd, &pMargin); // extension of window frame into client area
+		return DwmExtendFrameIntoClientArea(hWnd, &pMargin); 
 		break;
 	case WM_DESTROY:
-		PostQuitMessage(0); // We need to use this to exit a message loop
+		PostQuitMessage(0); 
 		break;
 	default:
-		return DefWindowProc(hWnd, Message, wParam, lParam); // Making sure all messages are processed
+		return DefWindowProc(hWnd, Message, wParam, lParam); 
 		break;
 	}
 }
@@ -40,23 +58,8 @@ int getPercent(float percent, float value)
 	return (percent / 100) * value;
 }
 
-
-void gen_random(char* s, const int len) {
-	static const char alphanum[] =
-		"0123456789"
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		"abcdefghijklmnopqrstuvwxyz";
-
-	for (int i = 0; i < len; ++i) {
-		s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
-	}
-
-	s[len] = 0;
-}
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	gen_random(lWindowName, 20);
 	WNDCLASSEXA OverlayWnd; // contains window class information
 	OverlayWnd.cbSize = sizeof(WNDCLASSEXA); // size of struct, basically checking for version or check
 	OverlayWnd.style = CS_HREDRAW | CS_VREDRAW;  // Style, redraw method type
@@ -71,131 +74,58 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	OverlayWnd.lpszMenuName = lWindowName;
 	OverlayWnd.lpszClassName = lWindowName;
 
-	// registers a window class for the use in call to this createwindowex func
 	if (!RegisterClassExA(&OverlayWnd))
-	{
 		exit(1);
-	}
 
 	TargetWnd = FindWindowA(0, tWindowName);
-
-	/*
-	CreateWindowEx creates an overlapped, pop-up, or child window with an extended window style.
-
-	dwExStyle (DWORD) is the extended window style of the window being created.
-	WS_EX_TOPMOST means that the window should be placed above all non-topmost windows and should stay above them, even when the window is deactivated
-	WS_EX_LAYERED uses a layered window can significantly improve performance and visual effects for a window that has a complex shape, animates its shape, or wishes to use alpha blending effects.
-	WS_EX_COMPOSITED paints all descendants of a window in bottom-to-top painting order using double-buffering.
-	WS_EX_TRANSPARENT means that the window should not be painted until siblings beneath the window (that were created by the same thread) have been painted.
-
-	lpClassName (LPCTSTR) is a null-terminated string or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.
-	lpWindowName (LPCSTR) is the window name.
-	dwStyle (DWORD) is the style of the window being created.
-	WS_POPUP means that the window is a pop-up window.
-	x (int) is the horizontal position of the window.
-	y (int) is the vertical position of the window.
-	nWidth (int) is the width.
-	nHeight (int) is the height.
-
-	The last three nulls are all optional, and I wont bother mentioning them. If you are interested google CreateWindowEx.
-
-	The dimensions for the overlay will be resized when the game is found.
-	*/
 
 
 	if (TargetWnd)
 	{
-		// Adjust Overlay text size and location based on resolution
 		overlayScale = 45;
 		GetWindowRect(TargetWnd, &WindowRect);
 		windowWidth = WindowRect.right - WindowRect.left;
 		windowHeight = WindowRect.bottom - WindowRect.top;
 		clientHeight = windowHeight;
 		clientWidth = windowWidth;
-
-		_RPT1(0, "WindowWidth = %u\n", windowWidth);
-		_RPT1(0, "WindowHeight = %u\n", windowHeight);
-
-		overlayX_Pos = getPercent(overlayScale, windowWidth);
-		overlayY_Pos = getPercent(4, windowHeight);
-
 		hWnd = CreateWindowExA(WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED, lWindowName, lWindowName, WS_POPUP, 1, 1, windowWidth, windowHeight, 0, 0, 0, 0);
+		SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
+		SetLayeredWindowAttributes(hWnd, 0, 255, LWA_ALPHA);
+		ShowWindow(hWnd, SW_SHOW);
 	}
 
-
-	/*
-	SetLayeredWindowAttributes sets the opacity and transparency color key for a layered window.
-	*/
-	SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
-	SetLayeredWindowAttributes(hWnd, 0, 255, LWA_ALPHA);
-
-	/*
-	Show the layered window aka our overlay.
-	*/
-	ShowWindow(hWnd, SW_SHOW);
 	if (initHack() == -1)
 	{
-		MessageBox(NULL, L"Overlay failed to initialize...", L"Error", 0);
+		MessageBox(NULL, L"Overlay failed to initialize...", L"Error", MB_ICONERROR);
 		exit(1);
 	}
 
-
-
-	/*
-	We use our handle to our overlay and initalize our D3D adapter.
-	*/
 	D3D9Init(hWnd);
 
-	/*
-	While Delete key is not pressed, we will be enable our hack.
-	*/
+	//While Delete key is not pressed, we will be enable our hack.
 	while (!GetAsyncKeyState(VK_DELETE))
 	{
-
-		/*
-		Dispatches incoming sent messages, checks the thread message queue for a posted message, and retrieves the message (if any exist). Messages are removed from the queue after processing due to PM_REMOVE.
-		*/
 		if (PeekMessage(&Message, hWnd, 0, 0, PM_REMOVE))
 		{
-			/*
-			Translates virtual-key messages into character messages.
-			*/
 			TranslateMessage(&Message);
-
-			/*
-			Dispatches a message to a window procedure.
-			*/
 			DispatchMessage(&Message);
 		}
 
-		/*
-		get the hWnd for the game we want.
-		*/
 		TargetWnd = FindWindowA(0, tWindowName);
 
-		/*
-		If there is no game, quit.
-		*/
 		if (!TargetWnd)
 			exit(1);
 
-		/*
-		Set the RECT using the targeted window.
-		*/
 		GetWindowRect(TargetWnd, &WindowRect);
 		GetClientRect(TargetWnd, &ClientRect);
 
 		windowWidth = WindowRect.right - WindowRect.left;
 		windowHeight = WindowRect.bottom - WindowRect.top;
-
-		/*
-		Resize the overlay matching what is required.
-		This is used for windowed mode so that we can adjust overlay relative to window position.
-		*/
 		DWORD dwStyle = GetWindowLong(TargetWnd, GWL_STYLE);
 
 		if (dwStyle & WS_BORDER)
 		{
+
 			windowHeight = WindowRect.bottom - WindowRect.top;
 			windowWidth = WindowRect.right - WindowRect.left;
 			clientHeight = ClientRect.bottom - ClientRect.top;
@@ -206,8 +136,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			WindowRect.left += borderWidth;
 			WindowRect.top += borderHeight;
+			_RPT1(0, "Window He = %u", windowHeight);
+
 		}
 
+		overlayX_Pos = getPercent(overlayScale, clientWidth);
+		overlayY_Pos = getPercent(4, clientHeight);
 		// if insert is pressed we move our TextOverlay to current cursor position
 		if (GetAsyncKeyState(VK_INSERT) & 1)
 		{
@@ -235,8 +169,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			setFontSize(fontSize -= 2);
 			setConfig();
 		}
-
-
 		MoveWindow(hWnd, WindowRect.left, WindowRect.top, clientWidth, clientHeight, true);
 
 	} // End of Loop
