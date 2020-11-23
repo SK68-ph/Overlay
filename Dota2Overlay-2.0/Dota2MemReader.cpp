@@ -37,28 +37,26 @@ int initHack()
 
 int getVbe() {
 
+    // First Scan engine2.dll for baseaddress.
     if (vbeBaseAddr == NULL)
     {//                                                                 
         vbeBaseAddr = PatternScanExModule(hProcess, L"dota2.exe", L"engine2.dll", basePtr1, mask1);
-        if (vbeBaseAddr == NULL)
+        if (vbeBaseAddr == NULL) // Retry with second offset
         {
             OutputDebugString(L"Retrying AOB with offset 2...\n");
             vbeBaseAddr = PatternScanExModule(hProcess, L"dota2.exe", L"engine2.dll", basePtr2, mask2);
         }
-        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; }
-        _RPT1(0, "Vbe BaseAddress = %p\n", vbeBaseAddr);
+        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; } // try to scan again later.
     }
 
+    // Scan for vbe address using our offset and base address
     if (vbEAddr == 0)
     {
         vbEAddr = FindDMAAddy(hProcess, (uintptr_t)vbeBaseAddr, offsets);
         if (vbEAddr == 0) {
-            _RPT1(0, "VBE ADDR NULL = %p\n", vbEAddr);
             vbEAddr = NULL;
             return -1;
         }
-        OutputDebugString(L"Overlay success...\n");
-        _RPT1(0, "Vbe Address = %p\n", vbEAddr);
     }
 
     int vbEVal = 0;
@@ -67,8 +65,7 @@ int getVbe() {
     if (vbEVal == 14) // Visible by enemy
     {
         return 14;
-    }
-    else if(vbEVal >= 6 && vbEVal <= 10) // Not visible by enemy
+    }else if(vbEVal >= 6 && vbEVal <= 10) // Not visible by enemy
     {
         return 6;
     }
@@ -81,9 +78,6 @@ int getVbe() {
 
 void close()
 {
-    offsets.empty();
-    vbeBaseAddr = NULL;
-    vbEAddr = NULL;
     CloseHandle(hProcess);
 }
 
