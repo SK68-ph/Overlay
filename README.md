@@ -24,4 +24,3 @@ TODO :
 - [x] Resize and move
 - [x] Save current location and size 
 - [x] Restore from config saved location and size 
-- [] ...
