@@ -15,6 +15,57 @@ char tWindowName[256] = "Dota 2";
 const MARGINS pMargin = { 0,0, clientWidth, clientHeight };
 
 
+
+
+int getPercent(float percent, float value)
+{
+	return (percent / 100) * value;
+}
+
+// Restore previous position and fontsize from Config
+void getConfig() {
+	std::string line;
+	std::ifstream config("overlay.conf");
+	if (config.is_open()) {
+		if (config.peek())
+		{
+			OutputDebugString(L"Config loading..\n");
+			std::getline(config, line);
+			overlayX_Pos = std::stoi(line);
+			_RPT1(0, "X = %u\n", overlayX_Pos);
+			std::getline(config, line);
+			overlayY_Pos = std::stoi(line);
+			_RPT1(0, "Y = %u\n", overlayY_Pos);
+			std::getline(config, line);
+			fontSize = std::stoi(line);
+			_RPT1(0, "Font = %u\n", fontSize);
+			setFontSize(fontSize);
+		}
+	}
+	else {
+		overlayX_Pos = getPercent(overlayScale, clientWidth);
+		overlayY_Pos = getPercent(4, clientHeight);
+	}
+	config.close();
+
+}
+
+void setConfig() {
+	std::fstream config;
+	config.open("overlay.conf", std::ios::out | std::ios::out);
+	if (config.is_open())
+	{
+		config << overlayX_Pos << std::endl;
+		config << overlayY_Pos << std::endl;
+		config << fontSize << std::endl;
+
+	}
+	else {
+		OutputDebugString(L"Error Saving Config");
+	}
+	config.close();
+}
+
 LRESULT CALLBACK Proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	switch (Message)
@@ -53,10 +104,6 @@ LRESULT CALLBACK Proc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-int getPercent(float percent, float value)
-{
-	return (percent / 100) * value;
-}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -99,6 +146,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		MessageBox(NULL, L"Overlay failed to initialize...", L"Error", MB_ICONERROR);
 		exit(1);
 	}
+	
+
+	bool init = false;
 
 	D3D9Init(hWnd);
 
@@ -140,8 +190,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		}
 
-		overlayX_Pos = getPercent(overlayScale, clientWidth);
-		overlayY_Pos = getPercent(4, clientHeight);
+		
+		if (init==false)
+		{
+			getConfig();
+			init = true;
+		}
+
 		// if insert is pressed we move our TextOverlay to current cursor position
 		if (GetAsyncKeyState(VK_INSERT) & 1)
 		{
@@ -171,12 +226,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		MoveWindow(hWnd, WindowRect.left, WindowRect.top, clientWidth, clientHeight, true);
 
-	} // End of Loop
+	} 
 	setConfig();
 
-	/*
-	Lets exit immediately...
-	*/
 	close();
 	exit(0);
 
