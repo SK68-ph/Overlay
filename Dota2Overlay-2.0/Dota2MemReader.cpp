@@ -1,18 +1,50 @@
 #include "Dota2MemReader.h"
 
 
-std::vector<unsigned int> offsets = { 0x0, 0x28, 0x38, 0x70, 0x170, 0x0, 0x1E4 };
-const char* basePtr1 = "\xE0\x0A\x32\xBE\xA6\x02\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\x30\x37\xA7\x02\x00\x00";
+std::vector<unsigned int> offsets;
+const char* basePtr1 = "\xE0\x0D\x42\xCD\xF4\x01\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x40\x07\x20\xE1\xF3\x01\x00\x00";
 const char* mask1 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
-const char* basePtr2 = "\xE0\x0A\x32\xBE\xA6\x01\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\x30\x37\xA7\x01\x00\x00";
+const char* basePtr2 = "\x40\x04\x13\x87\x4E\x02\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\xAF\x6F\x4D\x02\x00\x00";
 const char* mask2 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
-
 uintptr_t vbEAddr;
 void* vbeBaseAddr;
 HANDLE hProcess;
+
+
+std::vector<unsigned int> getOffsetFromText() {
+
+    std::fstream file;
+    std::string word;
+    std::vector<std::string> offsets;
+    std::vector<unsigned int> offsetsInt;
+
+    file.open("offsets.ini", std::ios::out | std::ios::in);
+    if (file.fail()) {
+        OutputDebugString(L"Failed to load config file...");
+    }
+
+    int i = 0;
+    while (file >> word)
+    {
+        if (i >= 8) break;
+
+        offsets.push_back(word);
+        i++;
+    }
+    for (size_t i = 0; i < offsets.size(); i++)
+    {
+        std::istringstream buffer(offsets[i]);
+        unsigned long long value;
+        buffer >> std::hex >> value;
+        offsetsInt.push_back(value);
+    }
+
+    return offsetsInt;
+}
+
 int initHack()
 {
-
+    offsets = getOffsetFromText();
     //Get ProcId of the target process
     DWORD procId = GetProcId(L"dota2.exe");
     if (!procId == 0)
@@ -76,16 +108,9 @@ int getVbe() {
     }
 }
 
+
 void close()
 {
     CloseHandle(hProcess);
 }
 
-
-
-//Not Visible = 06(radiant team) , 10(dire team) ; Visible = 14 
-//Update address
-//AOB = 06 00 00 00 ?? ?? ?? ?? F? 7F 00 00 ?? ?? ?? 0? 00 00 00 00 0? 00 00 00 00 00 00 00 ?0 0? ?? ?? = 32bytes (50results)
-//AOB sig  = 06 00 00 00 ?0 ?? ?? ?? F? 7F 00 00 ?? ?? ?? 0? 00 00 00 00 0? 00 00 00 00 00 00 00 ?0 0? ?? ?? ?? 0? 00 00 0? 00 00 00 00 00 00 00 0? 00 00 00 00 00 00 00 ?0 ?? ?? ?? ?? 0? 00 00 ?? 00 00 00 00 00 00 00 0? FF FF FF = 72bytes (1result)
-//BaseAddr = engine2.dll + 00??????
-//Offset usually ends with  = 170 0 1E4
