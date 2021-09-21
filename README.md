@@ -19,8 +19,8 @@ Press END to exit
 <details>
 <summary>How to update offsets?</summary>
 <br>
-Scan for p_TagVisibleByEnemy using these values (Not Visible = 06(radiant team) , 10(dire team) ; Visible = 14) should get at least 3 results.
-There is only 1 address that we need, filter it out by using "Find out what accesses this address". there should only be 2 address listed(try to change the value)
+Scan for isVisibleByEnemy using these values (Not Visible = 06(radiant team), 10(dire team), Visible = 14) filter it out by changing the values/state ingame, should get at least 3 results.
+There is only 1 address that we need, filter it out by using "Find out what accesses this address". there should only be 2 address listed(filter it out by changing the values/state ingame)
 ![alt text](https://github.com/skrixx68/Dota2-Overlay-2.0/blob/master/tut%20img/tut1.PNG?raw=true)
 
 Generate a pointermap, after that select pointer scan for this address
