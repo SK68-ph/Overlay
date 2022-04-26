@@ -12,9 +12,9 @@ Run Program ingame
 Press END to exit
 
 How to build :
-Download vstudio then install Desktop dev c++
-After then clone this repo and open project
-Change Configuration from debug to release x64
+Download vstudio then install Desktop dev c++.
+After that clone this repo and open project.
+Change Configuration from debug to release x64.
 
 <details>
 <summary>How to update offsets?</summary>
