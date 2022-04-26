@@ -4,6 +4,6 @@
 #include "patternscan.h"
 
 std::vector<unsigned int> getOffsetFromText();
-int initHack();
+void initHack();
 int getVbe();
 void close();
