@@ -102,7 +102,7 @@ int getVbe() {
             OutputDebugString(L"Retrying AOB with offset 2...\n");
             vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr2, maskPtr2);
         }
-        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return -1; } // try to scan again later.
+        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; } // try to scan again later.
     }
 
     // Scan for vbe address using our offset and base address
@@ -114,7 +114,7 @@ int getVbe() {
         if (vbEAddr == 0) {
             vbEAddr = NULL;
             OutputDebugString(L"vbeaddr not found");
-            return -1;
+            return NULL;
         }
     }
 
@@ -128,7 +128,7 @@ int getVbe() {
     else if (vbEVal == NULL)
     {
         vbEAddr = NULL;
-        return -1;
+        return NULL;
     }
 }
 

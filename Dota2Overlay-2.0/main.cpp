@@ -84,11 +84,11 @@ void drawLoop(int width, int height) {
 	if (tWindow == GetForegroundWindow())
 	{
 		int vbe = getVbe();
-		if (vbe == 14)
+		if (vbe == 14 || vbe == 30)
 		{
 			DrawString("Visible", fontSize, overlayX_Pos, overlayY_Pos, r, g, b, a);
 		}
-		else if (vbe <= 0)
+		else if (vbe == NULL)
 		{
 			DrawString("Waiting", fontSize, overlayX_Pos, overlayY_Pos, 125, 125, 125);
 		}
