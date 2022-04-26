@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="d3d9.cpp">
-      <Filter>Draw</Filter>
-    </ClCompile>
     <ClCompile Include="patterscan.cpp">
       <Filter>Hack\Mem</Filter>
     </ClCompile>
@@ -18,9 +15,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hD3D9.h">
-      <Filter>Draw</Filter>
-    </ClInclude>
     <ClInclude Include="patternscan.h">
       <Filter>Hack\Mem</Filter>
     </ClInclude>
@@ -30,11 +24,11 @@
     <ClInclude Include="Dota2MemReader.h">
       <Filter>Hack</Filter>
     </ClInclude>
-    <ClInclude Include="hMain.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="include.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectOverlay.h">
+      <Filter>Draw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
