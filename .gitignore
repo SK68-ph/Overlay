@@ -65,3 +65,8 @@ Dota2Overlay-2.0/conf.txt
 Dota2Overlay-2.0/x64/Release/Dota2Overlay-2.0_x64.Build.CppClean.log
 x64/Release/overlay.conf
 Dota2Overlay-2.0/overlay.conf
+Dota2Overlay-2.0/x64/Debug/Dota2Overlay-2.0.ilk
+x64/Debug/offsets.ini
+x64/Debug/overlay.ini
+x64/Release/offsets.ini
+x64/Release/overlay.ini

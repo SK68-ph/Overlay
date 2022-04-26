@@ -52,7 +52,7 @@ uintptr_t GetModuleBaseAddress(DWORD procId, const wchar_t* modName)
 }
 
 //Get ModuleEntry from module name, using toolhelp32snapshot
-MODULEENTRY32 GetModule(DWORD dwProcID,const wchar_t* moduleName)
+MODULEENTRY32 GetModule(DWORD dwProcID, const wchar_t* moduleName)
 {
 	MODULEENTRY32 modEntry = { 0 };
 
@@ -80,11 +80,11 @@ MODULEENTRY32 GetModule(DWORD dwProcID,const wchar_t* moduleName)
 }
 
 //evaluate address if valid using memorypage size & protection
-template<typename T,typename P>
+template<typename T, typename P>
 bool ValidatePointer(T lpAddress, P hProc)
 {
 	MEMORY_BASIC_INFORMATION mbi;
-	SIZE_T size = VirtualQueryEx(reinterpret_cast<HANDLE>(hProc),reinterpret_cast<LPVOID>(lpAddress), &mbi, sizeof(MEMORY_BASIC_INFORMATION));
+	SIZE_T size = VirtualQueryEx(reinterpret_cast<HANDLE>(hProc), reinterpret_cast<LPVOID>(lpAddress), &mbi, sizeof(MEMORY_BASIC_INFORMATION));
 
 	if (size == 0)
 		return false;
@@ -101,13 +101,12 @@ bool ValidatePointer(T lpAddress, P hProc)
 uintptr_t FindDMAAddy(HANDLE hProc, uintptr_t ptr, std::vector<unsigned int> offsets)
 {
 	uintptr_t addr = ptr;
-	for (unsigned int i = 0; i < offsets.size(); ++i)
+	for (unsigned int i = 1; i < offsets.size(); ++i)
 	{
 		ReadProcessMemory(hProc, (BYTE*)addr, &addr, sizeof(addr), 0);
 		addr += offsets[i];
-		if (!ValidatePointer(addr,hProc))
+		if (!ValidatePointer(addr, hProc))
 		{
-			Sleep(500);
 			return 0;
 		}
 	}
