@@ -1,7 +1,7 @@
 #include "patternscan.h"
 
 //Internal Pattern Scan
-void * PatternScan(char* base, size_t size, const char* pattern, const char* mask)
+void* PatternScan(char* base, size_t size, const char* pattern, const char* mask)
 {
 	size_t patternLength = strlen(mask);
 
@@ -25,7 +25,7 @@ void * PatternScan(char* base, size_t size, const char* pattern, const char* mas
 }
 
 //External Wrapper
-void * PatternScanEx(HANDLE hProcess, uintptr_t begin, uintptr_t end, const char* pattern, const char*  mask)
+void* PatternScanEx(HANDLE hProcess, uintptr_t begin, uintptr_t end, const char* pattern, const char* mask)
 {
 	uintptr_t currentChunk = begin;
 	SIZE_T bytesRead;
@@ -62,9 +62,8 @@ void * PatternScanEx(HANDLE hProcess, uintptr_t begin, uintptr_t end, const char
 }
 
 //Module wrapper for external pattern scan
-void * PatternScanExModule(HANDLE hProcess, const wchar_t * exeName, const wchar_t* module, const char* pattern, const char* mask)
+void* PatternScanExModule(HANDLE hProcess, DWORD processID, const wchar_t* module, const char* pattern, const char* mask)
 {
-	DWORD processID = GetProcId(exeName);
 	MODULEENTRY32 modEntry = GetModule(processID, module);
 
 	if (!modEntry.th32ModuleID)
