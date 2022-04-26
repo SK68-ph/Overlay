@@ -13,7 +13,7 @@ Press END to exit
 
 How to build :
 Download vstudio then install Desktop dev c++.
-After that clone this repo and open project.
+After that clone this repo and open project(.sln file).
 Change Configuration from debug to release x64.
 
 <details>
