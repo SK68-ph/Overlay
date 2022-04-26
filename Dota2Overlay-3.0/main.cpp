@@ -13,10 +13,6 @@ HWND tWindow;
 char tWindowName[256] = "Dota 2";
 char hWindowName[256] = "Dota 2";
 
-int getPercent(float percent, float value)
-{
-	return (percent / 100) * value;
-}
 
 // Restore previous position and fontsize from Config
 void getConfig() {
@@ -64,7 +60,6 @@ void drawLoop(int width, int height) {
 			overlayX_Pos = p.x;
 			overlayY_Pos = p.y;
 			setConfig();
-
 		}
 
 	}

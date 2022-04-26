@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dota2Overlay-2.0", "Dota2Overlay-2.0\Dota2Overlay-2.0.vcxproj", "{ABCA9822-2027-46DF-A2F2-A7A796ACC39E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dota2Overlay-3.0", "Dota2Overlay-3.0\Dota2Overlay-3.0.vcxproj", "{ABCA9822-2027-46DF-A2F2-A7A796ACC39E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -78,3 +78,9 @@ x64/Release/overlay.ini
 Dota2Overlay-2.0/x64/Release/Dota2Overlay-3.0_x64.Build.CppClean.log
 Dota2Overlay-2.0/overlay.ini
 Dota2Overlay-2.0/overlay.ini
+x64/Release/Dota2Overlay-3.0_x64.zip
+*.ilk
+*.log
+*.idb
+Dota2Overlay-3.0/x64/Release/Dota2Overlay-2.0.vcxproj.FileListAbsolute.txt
+Dota2Overlay-3.0/x64/Release/Dota2Overlay-3.0.vcxproj.FileListAbsolute.txt
