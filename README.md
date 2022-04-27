@@ -11,6 +11,12 @@ Run dota2 (offline and unsecured mode)
 Run Program ingame
 Press END to exit
 
+How to build :
+Download vstudio then install Desktop dev c++.
+After that clone this repo and open project(.sln file).
+Change Configuration from debug to release x64.
+Then press Ctrl+Shift+b 
+
 <details>
 <summary>How to update offsets?</summary>
 <br>
