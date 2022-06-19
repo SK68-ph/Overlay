@@ -85,7 +85,7 @@ void drawLoop(int width, int height) {
 		}
 		pVbe = vbe;
 	}
-	Sleep(1);
+	Sleep(100);
 }
 
 void main()
