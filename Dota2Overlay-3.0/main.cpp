@@ -47,7 +47,7 @@ void setConfig() {
 	config.close();
 }
 
-
+int pVbe = 0; // Previous vbe value
 
 void drawLoop(int width, int height) {
 
@@ -79,17 +79,13 @@ void drawLoop(int width, int height) {
 	if (tWindow == GetForegroundWindow())
 	{
 		int vbe = getVbe();
-		if (vbe == 14 || vbe == 30)
+		if (vbe == 0 && pVbe == 0 )
 		{
 			DrawString("Visible", fontSize, overlayX_Pos, overlayY_Pos, r, g, b, a);
 		}
-		else if (vbe == NULL)
-		{
-			DrawString("Waiting", fontSize, overlayX_Pos, overlayY_Pos, 125, 125, 125);
-		}
-
+		pVbe = vbe;
 	}
-	Sleep(100);
+	Sleep(1);
 }
 
 void main()

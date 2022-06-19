@@ -4,11 +4,8 @@
 
 std::vector<unsigned int> offsets;
 const char* baseAddrPtr1 = "\xE0\x0D\x42\xCD\xF4\x01\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x40\x07\x20\xE1\xF3\x01\x00\x00";
-const char* maskPtr1 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
 const char* baseAddrPtr2 = "\x40\x04\x13\x87\x4E\x02\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x60\x06\xAF\x6F\x4D\x02\x00\x00";
-const char* maskPtr2 = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
-const char* patch = "\xD3\xE0\x23\xD8\x39\x9F\x04\x0E\x00\x00\x74\x06\x89\x9F\x04\x0E\x00\x00\x48\x8B\x5C\x24\x30\x48\x83\xC4\x20\x5F\xC3";
-const char* patchMask = "xx??xxxxxxxxxxxxxxxxxxxxxxxxx";
+const char* baseAddrMask = "?????xxxxxxxxxxxxxxxxxxx?????xxx";
 
 uintptr_t vbEAddr;
 void* vbeBaseAddr;
@@ -50,20 +47,6 @@ std::vector<unsigned int> getOffsetFromText() {
 }
 
 
-void bytePatch() {
-    uintptr_t baseAddr = (uintptr_t)PatternScanExModule(hProcess, procId, L"client.dll", patch, patchMask);
-    if (baseAddr == NULL)
-    {
-        std::cout << "Failed to patch byte ..." << std::endl;
-        system("pause");
-        exit(-1);
-    }
-    baseAddr += 0x02;
-    byte toPatch = 0x09;
-    WriteProcessMemory(hProcess, (BYTE*)baseAddr, &toPatch, sizeof(toPatch), nullptr);
-}
-
-
 void initHack()
 {
     offsets = getOffsetFromText();
@@ -87,8 +70,8 @@ void initHack()
         exit(-1);
     }
     std::cout << "Handle successfully created ..." << std::endl;
-    bytePatch();
 }
+
 
 
 int getVbe() {
@@ -96,11 +79,11 @@ int getVbe() {
     // First Scan engine2.dll for baseaddress.
     if (vbeBaseAddr == NULL)
     {
-        vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr1, maskPtr1);
+        vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr1, baseAddrMask);
         if (vbeBaseAddr == NULL) // Retry with second offset
         {
             OutputDebugString(L"Retrying AOB with offset 2...\n");
-            vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr2, maskPtr2);
+            vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr2, baseAddrMask);
         }
         if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; } // try to scan again later.
     }
@@ -118,14 +101,14 @@ int getVbe() {
         }
     }
 
-    int vbEVal = 0;
-    ReadProcessMemory(hProcess, (BYTE*)vbEAddr, &vbEVal, sizeof(vbEVal), nullptr);
-    //Test Value
-    if (vbEVal == 14 || vbEVal == 30) // Visible by enemy (normal game 14, custom game 30)
+    int vbeVal = 0;
+    ReadProcessMemory(hProcess, (BYTE*)vbEAddr, &vbeVal, sizeof(vbeVal), nullptr);
+
+    if (vbeVal == 0 && vbeVal != NULL) // Visible by enemy value = 0
     {
-        return 14;
+        return 0;
     }
-    else if (vbEVal == NULL)
+    else if (vbeVal == NULL)
     {
         vbEAddr = NULL;
         return NULL;
