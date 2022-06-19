@@ -73,7 +73,6 @@ void initHack()
 }
 
 
-
 int getVbe() {
 
     // First Scan engine2.dll for baseaddress.
@@ -85,7 +84,7 @@ int getVbe() {
             OutputDebugString(L"Retrying AOB with offset 2...\n");
             vbeBaseAddr = PatternScanExModule(hProcess, procId, L"engine2.dll", baseAddrPtr2, baseAddrMask);
         }
-        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return NULL; } // try to scan again later.
+        if (vbeBaseAddr == NULL) { OutputDebugString(L"BaseAddress AOB Pattern not found...\n"); return Waiting; } // try to scan again later.
     }
 
     // Scan for vbe address using our offset and base address
@@ -97,7 +96,7 @@ int getVbe() {
         if (vbEAddr == 0) {
             vbEAddr = NULL;
             OutputDebugString(L"vbeaddr not found");
-            return NULL;
+            return Waiting;
         }
     }
 
@@ -106,7 +105,7 @@ int getVbe() {
 
     if (vbeVal == 0 && vbeVal != NULL) // Visible by enemy value = 0
     {
-        return 0;
+        return Visible;
     }
     else if (vbeVal == NULL)
     {

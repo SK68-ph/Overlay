@@ -14,6 +14,8 @@ char tWindowName[256] = "Dota 2";
 char hWindowName[256] = "Dota 2";
 
 
+
+
 // Restore previous position and fontsize from Config
 void getConfig() {
 	std::string line;
@@ -79,7 +81,7 @@ void drawLoop(int width, int height) {
 	if (tWindow == GetForegroundWindow())
 	{
 		int vbe = getVbe();
-		if (vbe == 0 && pVbe == 0 )
+		if (vbe == Visible && pVbe == Visible)
 		{
 			DrawString("Visible", fontSize, overlayX_Pos, overlayY_Pos, r, g, b, a);
 		}

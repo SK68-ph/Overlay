@@ -7,3 +7,8 @@ std::vector<unsigned int> getOffsetFromText();
 void initHack();
 int getVbe();
 void close();
+
+enum Status {
+	Visible,
+	Waiting
+};
