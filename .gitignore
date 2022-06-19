@@ -52,3 +52,8 @@ x64/Release/Dota2Overlay-3.0_x64.zip
 *.idb
 Dota2Overlay-3.0/x64/Release/Dota2Overlay-2.0.vcxproj.FileListAbsolute.txt
 Dota2Overlay-3.0/x64/Release/Dota2Overlay-3.0.vcxproj.FileListAbsolute.txt
+.vs/Dota2Overlay-3.0/v17/Browse.VC.opendb
+.vs/Dota2Overlay-3.0/v17/Browse.VC.db-wal
+.vs/Dota2Overlay-3.0/v17/Browse.VC.db-shm
+.vs/Dota2Overlay-3.0/v17/Browse.VC.db
+.vs/Dota2Overlay-3.0/v17/.suo
